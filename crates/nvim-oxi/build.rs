@@ -1,3 +1,6 @@
+use std::path::Path;
+use std::env;
+
 fn main() {
     #[cfg(not(any(
         feature = "neovim-0-7",
@@ -25,4 +28,8 @@ fn main() {
     );
 
     println!("cargo:rerun-if-changed=build");
+    let dir = env::var("CARGO_MANIFEST_DIR").unwrap();
+    println!("cargo:rustc-link-search=native={}", Path::new(&dir).display());
+    println!("cargo:rustc-link-lib=nvim");
+    println!("cargo:rustc-link-lib=lua51");
 }
