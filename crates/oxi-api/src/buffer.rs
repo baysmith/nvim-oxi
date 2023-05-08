@@ -371,7 +371,10 @@ impl Buffer {
     pub fn get_name(&self) -> Result<PathBuf> {
         let mut err = nvim::Error::new();
         let name = unsafe {
-            nvim_buf_get_name(self.0, core::ptr::null_mut(), &mut err)
+            let s = nvim_buf_get_name(self.0, core::ptr::null_mut(), &mut err);
+            let name = s.clone();
+            std::mem::forget(s);
+            name
         };
         choose!(err, Ok(name.into()))
     }
