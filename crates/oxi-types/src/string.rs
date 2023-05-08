@@ -7,6 +7,9 @@ use oxi_luajit as lua;
 
 use crate::NonOwning;
 
+#[cfg(windows)]
+use std::path::PathBuf;
+
 /// Binding to the string type used by Neovim.
 ///
 /// Unlike Rust's `String`, this type is not guaranteed to contain valid UTF-8
